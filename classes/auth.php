@@ -1,0 +1,215 @@
+<?php
+require("db.php");
+
+class Auth {
+
+
+public function RegisterUser($fullName,$email,$city,$phone,$gender,$password,$activation_code){
+		
+		
+		$join_date = date("m.d.y");
+		$dbh = DB();
+		// echo gettype($dbh);
+		$stmt = $dbh->prepare("SELECT * FROM users WHERE email = ?");
+		$stmt->execute([$email]);
+		$user = $stmt->fetch(PDO::FETCH_ASSOC);
+		if ($user >  0) {
+			return false;
+		}else {
+
+
+		$hashed = password_hash($password,PASSWORD_BCRYPT);
+		$stmt = $dbh->prepare("INSERT INTO users(fullName,email,city,phone,gender,
+			password,register_date,activation_code) VALUES(?,?,?,?,?,?,?,?)");
+		$stmt->execute([$fullName,$email,$city,$phone,$gender,$hashed,$join_date,
+			password_hash($activation_code, PASSWORD_DEFAULT)]);
+		$inserted = $stmt->rowCount();
+		if ($inserted>0) {
+			return true;
+		}else {
+			return $dbh->errorInfo();
+		}
+			
+		}
+	}
+
+	// get verified users from the database
+	public function find_user_by_email(string $email)
+	{
+		$dbh = DB();
+		$stmt = $dbh->prepare("SELECT username, password, status FROM users WHERE email=:email");
+		$stmt->execute([$email]);
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
+
+	// checks if a user is verified
+	public function is_user_verified($user)
+	{
+		return (int)$user['status'] === 1;
+	}
+
+	// tthis function logs user in.
+	public function login_user($email,$password)
+	{
+
+		// find verified users
+		$verified_user = $this->find_user_by_email($email);
+
+	
+			if ($verified_user && $this->is_user_verified($verified_user) && 
+				password_verify($password, $verified_user['password'] )) {
+				return true;
+			}else {
+				return false;
+			}
+			
+		
+
+	}
+
+	// find unverified users.
+	public function find_unverified_user(string $activation_code, string $email)
+	{	
+		$dbh = DB();
+		$sql = "SELECT id, activation_code FROM users WHERE status = 0 AND email=:email";
+		$stmt = $dbh->prepare($sql);
+		$stmt->execute([$email]);
+		$user = $stmt->fetch(PDO::FETCH_ASSOC);
+		// verify the activation code
+		if (password_verify($activation_code, $user['activation_code'])) {
+			return $user;
+		}
+		return null;
+
+
+	}
+
+	public function activate_user(int $user_id):bool
+	{
+		$dbh = DB();
+		$sql = "UPDATE users SET status = 1 WHERE id=:id";
+		$stmt = $dbh->prepare($sql);
+		$stmt->bindValue(':id', $user_id, PDO::PARAM_INT);
+		return $stmt->execute();
+	}
+
+	// verify users email
+	public function send_activation_email(String $email, String $activation_code):void
+	{
+		//activation link
+		$activation_link = "activation.php?email=$email&activation_code=$activation_code";
+
+		// set email body
+		$subject = "Please acivae your account";
+		$message = "yet to come";
+		$header = "From:" . $email;
+
+		// send the mail
+		mail($email, $subject, nl2br($message), $header);
+	}
+
+	public function generate_activation_code():string
+	{
+		return bin2hex(random_bytes(16));
+	}
+
+
+
+	// send password reset link to users email.
+	public function sendUserLink($email){
+			$dbh = DB();
+
+			// validate email
+			if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
+				return false;
+			}else {
+
+				try{
+					// checking if user email already exist in the  system
+					$stmt = $dbh->prepare("SELECT email,password FROM users  WHERE email = ?");
+					$stmt->execute([$email]);
+					while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
+						$email = $data['email'];
+						$password = password_hash($data['password'], PASSWORD_DEFAULT);
+
+							// generate a unique random token of length 100
+						$token = bin2hex(random_bytes(50));
+
+						$stmt = $dbh->prepare("INSERT INTO password_reset(email,token) VALUES(?,?)");
+						$stmt->execute([$email,$token]);
+						$count = $stmt->rowCount();
+						if ($count>0) {
+							
+							// // Send email to user with the token in a link they can click on
+							$to = $email;
+							
+							$subject = "Reset your password on xsoftgh.com";
+							
+						// $msg = "Hi there, click on below link to reset your password<br> <a href=\"new_password.php?token=" . $token . "\">link</a>";
+
+							$msg = "Click <a href='www.xsoftgh.com/booking/admin_new_password.php?token=$token' >here</a> to reset your password";
+									
+							   
+
+							  
+							   	$headers[] = 'MIME-Version: 1.0';
+							   	$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+							   //	$headers[] = "From: info@examplesite.com";
+
+							   
+							   $email_sent = mail($to, $subject, $msg, implode("\r\n", $headers));
+							   if ($email_sent) {
+							   		return true;
+							   		header('Location: admin_new_password.php?email=' . $email);
+							   }else {
+							   	return false;
+							   }
+						}
+
+
+					}
+
+				}catch(ErrorException $ex){
+					echo "Message: ". $ex->getMessage();
+				}
+			}
+			// end of else
+		}
+
+
+
+		// update users password
+		public function newUserPassword($password){
+			$dbh = DB();
+			$token = "";
+			if (isset($_GET['token'])) {
+				$token = $_GET['token'];
+
+				$stmt = $dbh->prepare("SELECT email FROM password_reset WHERE token = ?");
+				$stmt->execute([$token]);
+				while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+					$email = $row['email'];
+
+					if ($email) {
+						$new_password = password_hash($password, PASSWORD_DEFAULT);
+						$stmt = $dbh->prepare("UPDATE users SET password = ? WHERE email = ?");
+						$stmt->execute([$new_password,$email]);
+						$row = $stmt->rowCount();
+						if ($row>0) {
+							return true;
+						}else {
+							return false;
+						}
+
+					}
+				}
+
+			}
+		}	
+
+
+	
+
+
+}
+?>
