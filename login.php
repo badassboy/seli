@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require("classes/auth.php");
 $auth = new Auth();
 
@@ -14,6 +14,7 @@ if (isset($_POST['login'])) {
   $user = $auth->login_user($email,$password);
 
   if ($user) {
+    $_SESSION['user_id'] = $user['id']; 
     header("Location:homepage.php");
     exit();
   }
@@ -43,6 +44,11 @@ if (isset($_POST['login'])) {
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- google fonts -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato&family=Roboto:wght@100&display=swap" rel="stylesheet">
+
     <!-- Custom styles for this template -->
     <link href="css/login.css" rel="stylesheet">
   </head>
@@ -55,34 +61,7 @@ if (isset($_POST['login'])) {
 
     <!-- navigation -->
     <div class="container-fluid">
-       <nav class="navbar navbar-expand-lg navbar-dark">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="homepage.php">Home <span class="sr-only">(current)</span></a>
-      </li>
-
-    
-
-       <li class="nav-item">
-        <a class="nav-link" href="login.php">Register</a>
-      </li>
-
-       <li class="nav-item">
-        <a class="nav-link" href="login.php">Login</a>
-      </li>
-
-      
-     
-    </ul>
-   
-  </div>
-</nav>
+      <?php include("nav.php"); ?>
     </div>
      
 

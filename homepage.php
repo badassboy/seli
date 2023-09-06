@@ -1,13 +1,15 @@
 <?php
+// checking if user is logged in using sessions.
+// session_start();
+// if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == "true") {
+	
+// }else{
+// 	header("Location:index.php");
+// 	exit();
+// }
 	require("db.php");
 
 	$dbh = DB();
-
-		// 1.get all questions from database
-		// 2.store questions in an array
-		// 3. loop through the questions the array and paginate the results.
-
-	
 
 	$sql = "SELECT * FROM questions";
 	$stmt = $dbh->prepare($sql);
@@ -62,31 +64,7 @@
 <body>
 
 	 <!-- navigation -->
-      <nav class="navbar navbar-expand-lg navbar-dark">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="homepage.php">Home <span class="sr-only">(current)</span></a>
-      </li>
-
-    
-
-       <li class="nav-item">
-        <a class="nav-link" href="login.php">Logout</a>
-      </li>
-
-      
-     
-    </ul>
-   
-  </div>
-</nav>
-
+     <?php include("header.php"); ?>
 <!-- navigation -->
 
 
@@ -128,8 +106,8 @@
    <?php echo $row['ans2']; ?>
   </label>
 </div>
-<div class="form-check disabled">
-  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
   <label class="form-check-label" for="exampleRadios3">
    <?php echo $row['ans3']; ?>
   </label>

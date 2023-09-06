@@ -3,16 +3,20 @@ require("db.php");
 
 class Auth {
 
+public function check_existing_user($email){
+
+		$dbh = DB();
+		$stmt = $dbh->prepare("SELECT * FROM users WHERE email = ?");
+		$stmt->execute([$email]);
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+
+}
 
 public function RegisterUser($fullName,$email,$city,$phone,$gender,$password,$activation_code){
 		
 		
 		$join_date = date("m.d.y");
-		$dbh = DB();
-		// echo gettype($dbh);
-		$stmt = $dbh->prepare("SELECT * FROM users WHERE email = ?");
-		$stmt->execute([$email]);
-		$user = $stmt->fetch(PDO::FETCH_ASSOC);
+		$user =$this->check_existing_user($email);
 		if ($user >  0) {
 			return false;
 		}else {
@@ -100,8 +104,8 @@ public function RegisterUser($fullName,$email,$city,$phone,$gender,$password,$ac
 		$activation_link = "activation.php?email=$email&activation_code=$activation_code";
 
 		// set email body
-		$subject = "Please acivae your account";
-		$message = "yet to come";
+		$subject = "Please activate your account";
+		$message = "Click <a href='.$activation_link.'>here</a> to activate your acccount";;
 		$header = "From:" . $email;
 
 		// send the mail
@@ -111,6 +115,23 @@ public function RegisterUser($fullName,$email,$city,$phone,$gender,$password,$ac
 	public function generate_activation_code():string
 	{
 		return bin2hex(random_bytes(16));
+	}
+
+	public function insert_token($email,$token)
+	{
+		$dbh = DB();
+		$stmt = $dbh->prepare("INSERT INTO password_reset(email,token) VALUES(?,?)");
+		$stmt->execute([$email,$token]);
+		return $stmt->rowCount();
+
+	}
+
+	public function sendUserEmail($to,$subject,$msg)
+	{
+		 	$headers[] = 'MIME-Version: 1.0';
+		   	$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
+		return mail($to, $subject, $message, implode("\r\n", $headers));
 	}
 
 
@@ -126,40 +147,26 @@ public function RegisterUser($fullName,$email,$city,$phone,$gender,$password,$ac
 
 				try{
 					// checking if user email already exist in the  system
-					$stmt = $dbh->prepare("SELECT email,password FROM users  WHERE email = ?");
-					$stmt->execute([$email]);
-					while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
-						$email = $data['email'];
-						$password = password_hash($data['password'], PASSWORD_DEFAULT);
+					$user_detail = $this->check_existing_user($email);
+					foreach ($user_detail as $row) {
+						
+						$email = $row['email'];
+						$password = password_hash($row['password'], PASSWORD_DEFAULT);
 
 							// generate a unique random token of length 100
-						$token = bin2hex(random_bytes(50));
+						$token = $this->generate_activation_code();
+						$count = $this->insert_token($email,$token);
 
-						$stmt = $dbh->prepare("INSERT INTO password_reset(email,token) VALUES(?,?)");
-						$stmt->execute([$email,$token]);
-						$count = $stmt->rowCount();
 						if ($count>0) {
 							
-							// // Send email to user with the token in a link they can click on
-							$to = $email;
-							
-							$subject = "Reset your password on xsoftgh.com";
-							
-						// $msg = "Hi there, click on below link to reset your password<br> <a href=\"new_password.php?token=" . $token . "\">link</a>";
+				
 
-							$msg = "Click <a href='www.xsoftgh.com/booking/admin_new_password.php?token=$token' >here</a> to reset your password";
-									
-							   
+			   $email_sent = $this->sendUserEmail($email, "Reset your password on xsoftgh",
 
-							  
-							   	$headers[] = 'MIME-Version: 1.0';
-							   	$headers[] = 'Content-type: text/html; charset=iso-8859-1';
-							   //	$headers[] = "From: info@examplesite.com";
+			   	"Click <a href='www.xsoftgh.com/booking/admin_new_password.php?token=$token' >here</a> to reset your password", implode("\r\n", $headers));
 
-							   
-							   $email_sent = mail($to, $subject, $msg, implode("\r\n", $headers));
 							   if ($email_sent) {
-							   		return true;
+							   		// return true;
 							   		header('Location: admin_new_password.php?email=' . $email);
 							   }else {
 							   	return false;
@@ -168,6 +175,8 @@ public function RegisterUser($fullName,$email,$city,$phone,$gender,$password,$ac
 
 
 					}
+				
+				// end of foreach loop
 
 				}catch(ErrorException $ex){
 					echo "Message: ". $ex->getMessage();

@@ -16,6 +16,12 @@
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- google fonts -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato&family=Roboto:wght@100&display=swap" rel="stylesheet">
+
+
     <!-- Custom styles for this template -->
     <link href="cover.css" rel="stylesheet">
   </head>
@@ -44,9 +50,7 @@
         <a class="nav-link" href="login.php">Login</a>
       </li>
 
-      
-     
-    </ul>
+      </ul>
    
   </div>
 </nav>
@@ -63,17 +67,17 @@
   </ol>
   <div class="carousel-inner" style="height: 500px;">
     <div class="carousel-item active">
-      <img class="d-block w-100" src="images/sliders/black.jpg" alt="First slide" style="height:500px;">
+      <img class="d-block w-100" src="images/seliModel/banner1.jpg" alt="First slide" style="height:500px;">
        <div class="carousel-caption d-none d-md-block">
-    <h5>hello</h5>
-    <p>hi</p>
+   <!--  <h5>hello</h5>
+    <p>hi</p> -->
   </div>
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="images/sliders/company.jpg" alt="Second slide" style="max-height:500px;">
+      <img class="d-block w-100" src="images/seliModel/banner2.jpg" alt="Second slide" style="max-height:500px;">
        <div class="carousel-caption d-none d-md-block">
-    <h5>hello</h5>
-    <p>hi</p>
+   <!--  <h5>hello</h5>
+    <p>hi</p> -->
   </div>
     </div>
 

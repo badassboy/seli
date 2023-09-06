@@ -1,3 +1,7 @@
+body{
+  font-family: 'Lato', sans-serif;
+}
+
 .navbar {
 /*  background-color: yellow;*/
   background-color:#005C46;
@@ -10,6 +14,7 @@
 /*page*/
 .wrapper {
   background-color: #e6e6e6;
+
   height: 600px;
 }
 
@@ -19,6 +24,10 @@
 
 .login-form {
   margin-top: 5%;
+ /* background-image: url("images/seliModel/banner1.jpg");
+background-position: center center;
+background-repeat: no-repeat;
+background-size: cover;*/
   background-color: #ffffff;
   height: 400px;
   width: 50%;
