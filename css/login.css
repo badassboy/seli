@@ -83,4 +83,30 @@ background-size: cover;*/
   background-color:#005C46;
 }
 
+/*media queries*/
+/* Extra small devices (phones, 600px and down) */
+/*@media only screen and (max-width: 430px) {
+  .footer {
+    background-color: yellow;
+  }
+} */
+@media (max-width: 575.98px) { 
+
+  .wrapper {
+    position: relative;
+  }
+
+  .login-form{
+/*    background-color: yellow;*/
+    width: 75%;
+    margin-top: 10%;
+
+  }
+
+  .footer {
+    bottom: -25%;
+  }
+
+ }
+
 

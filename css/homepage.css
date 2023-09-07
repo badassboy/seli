@@ -14,3 +14,27 @@
 .form-check-label {
 	padding-top: 2.5%;
 }
+
+/*media queries*/
+@media (max-width: 575.98px) { 
+	.wrapper {
+		height: 1200px;
+		position: relative;
+	}
+
+	.uservideo{
+/*		margin-top: -20%;*/
+		position: absolute;
+		height: 300px;
+
+/*		bottom: 20px;*/
+	}
+
+ 	.questions {
+ 		height: 500px;
+ 		top: 30%;
+ 		background-color: yellow;
+ 		position: absolute;
+ 	}
+
+ }

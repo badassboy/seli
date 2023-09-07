@@ -71,10 +71,13 @@
 	<div class="container-fluid wrapper">
 		
 		<!-- video player -->
-		<video width="320" height="240" controls>
+		<div class="container uservideo">
+			<video width="320" height="240" controls>
 		  <source src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" type="video/mp4">
 		  	Your browser does not support the video tag.
 		</video>
+		</div>
+		
 		<!-- end of video player -->
 		 
 		 

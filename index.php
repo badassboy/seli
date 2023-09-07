@@ -74,7 +74,7 @@
   </div>
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="images/seliModel/banner2.jpg" alt="Second slide" style="max-height:500px;">
+      <img class="d-block w-100" src="images/seliModel/banner2.jpg" alt="Second slide" style="height:500px;">
        <div class="carousel-caption d-none d-md-block">
    <!--  <h5>hello</h5>
     <p>hi</p> -->
