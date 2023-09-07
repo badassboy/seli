@@ -141,7 +141,7 @@ if (isset($_POST['signup'])) {
 
 				<div class="form-group">
 				  <label>Email</label>
-				  <input type="email" name="Email" class="form-control"  placeholder="Email" required="required">
+				  <input type="email" name="email" class="form-control"  placeholder="Email" required="required">
 				</div>
 
 				<div class="form-group">

@@ -3,8 +3,8 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-require_once("../functions.php");
-$ch = new Church();
+require_once("classes/auth.php");
+$ch = new Auth();
 
 $info = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -12,14 +12,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 	$email = trim($_POST['email']);
 	$pwd = trim($_POST['pwd']);
+	// echo $pwd;
 	
-	if (!empty($email) || !empty($pwd)) {
+	if (isset($email) || isset($pwd)) {
 
-		$user = $ch->loginAdmin($email,$pwd);
+		$user = $ch->login($email,$pwd);
 		if ($user) {
-			$_SESSION['email']=$email;
-			$_SESSION['adimn_pass']=$pwd;
+			// $_SESSION['email']=$email;
+			// $_SESSION['adimn_pass']=$pwd;
 			header("Location: homepage.php");
+			exit;
+
 			// return;
 		}else{
 			$info = "login failed";
@@ -53,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 	<title></title>
 
-	<link rel="stylesheet" type="text/css" href="bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/admin-index.css">
 </head>
 <body>
@@ -70,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			<h3>LOGIN HERE</h3>
 			    <div class="second">
 			    	
-			    	<form method="post" action="index.php">
+			    	<form method="post" action="">
 			    		<?php
 
 			    		if (isset($info)) {
@@ -80,13 +83,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			    		?>
 			    	  <div class="form-group">
 			    	      <label for="exampleInputEmail1">Email address</label>
-			    	      <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+			    	      <input type="email" name="email" class="form-control"  placeholder="Email">
 			    	      
 			    	    </div>
 
 			    	  <div class="form-group">
 			    	    <label for="exampleInputPassword1">Password</label>
-			    	    <input type="password" name="pwd" class="form-control" id="exampleInputPassword1" placeholder="Password" required="required">
+			    	    <input type="password" name="pwd" class="form-control" placeholder="Password" required="required">
 			    	  </div>
 
 			    	  

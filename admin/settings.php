@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require("../database.php");
+require("../db.php");
 // $dbh = DBCreate();
 
 // Displaying admin info into the table
@@ -78,7 +78,7 @@ $dbh = DB();
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3>Bootstrap Sidebar</h3>
+                <h3>Seli Project</h3>
             </div>
 
             <!-- storing div name in hidden input -->
@@ -86,13 +86,13 @@ $dbh = DB();
 
             <ul class="list-unstyled components">
 
-                <li>
+                <!--  <li>
                     <a href="#" id="addButton"  onclick="MyFunction('addUser')">Add Admin</a>
-                </li>
+                </li> -->
 
                
                 <li>
-                    <a href="#" id="all_admin"  onclick="MyFunction('admin_table')">All Admin</a>
+                    <a href="#" id="all_admin"  onclick="MyFunction('admin_table')">All Users</a>
                 </li>
                
             </ul>
@@ -126,7 +126,7 @@ $dbh = DB();
                 </div>
             </nav>
 
-            <h2>Admin Settings</h2>
+            <h2>USERS</h2>
 
             <div class="container" id="addUser">
               <div id="response"></div>
@@ -175,7 +175,7 @@ $dbh = DB();
                   </div>
 
                 </div>
-                <!-- end of row 2 -->
+              
 
                  <button type="submit" class="btn btn-primary">Add User</button>
 
@@ -191,17 +191,18 @@ $dbh = DB();
                   
 
           <div class="container" id="admin_table">
-              <h5>Administrators</h5>
+              <!-- <h5>Administrators</h5> -->
               
                   <table class="table">
 
                     <thead>
                       <tr>
-                        <th scope="col">Action</th>
-                        <th scope="col">Username</th>
+                        
                         <th scope="col">FullName</th>
                         <th scope="col">Email Address</th>
                         <th scope="col">Date</th>
+                        <th scope="col">Paid</th>
+                        <th scope="col">Action</th>
                       </tr>
                     </thead>
 
@@ -300,23 +301,78 @@ $dbh = DB();
                     for (var i = 0; i < len; i++) {
 
 
-                        var action = '<a><i class="fa fa-trash" aria-hidden="true"></i></a>';
-                        var username = response[i]["username"];
-
+                       
+                        
+                        var userID = response[i]["user_id"];
                         var fullname = response[i]["fullname"];
                         var email = response[i]["email"];
                         var my_date = response[i]["admin_date"];
+                        var paid = response[i]["paid"];
+                  
+                        var action = "<a href='paid.php?id="+userID+"'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
 
                         var table_str = "<tr>" +
-                                     "<td>" + action + "</td>" +
-                                     "<td>" + username + "</td>" +
+                                    
+                                    
                                      "<td>" + fullname + "</td>" +
                                      "<td>" + email + "</td>" +
                                      "<td>" + my_date + "</td>" +
+                                      "<td id='paid'>" + paid + "</td>" +
+                                       "<td>" + action + "</td>" +
                                      "</tr>";
 
 
                              $(".table tbody").append(table_str);
+
+                             // second ajax request
+
+                             // var update = document.getElementById("updateButton");
+                             // update.setAttribute("id", userID);
+                             //  var userId = $(this).data("id");
+                             // update.addEventListener("click", function(){
+                                 
+                             //      $.ajax({
+                             //        type:"POST",
+                             //        url:"paid.php",
+                             //        data:{
+                             //            userId: userId,
+                             //            paid:paid
+                             //        },
+                             //        success: function(response){
+                             //            $("#paid").text(response);
+                             //        },
+                             //        error:function(){
+                             //            alert("Error updating field");
+                             //        }
+
+                             //    });
+                                 
+                             // });
+
+
+                           
+
+                             // function updatePaymentStatus(userId,paid){
+                             //    $.ajax({
+                             //        type:"POST",
+                             //        url:"paid.php",
+                             //        data:{
+                             //            userId: userId,
+                             //            paid:paid
+                             //        },
+                             //        success: function(response){
+                             //            $("#paid").text(response);
+                             //        },
+                             //        error:function(){
+                             //            alert("Error updating field");
+                             //        }
+
+                             //    });
+                             // }
+
+
+
+
 
                        
                     }

@@ -1,24 +1,25 @@
 <?php
 
-include("../database.php");
+include("../db.php");
 $db = DB();
 
 $json = array();
 
-$stmt = $db->prepare("SELECT * FROM admins");
+$stmt = $db->prepare("SELECT * FROM users");
 $stmt->execute();
 while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$username = $result['username'];
-	$fullname = $result['fullname'];
+	$user_id = $result['id'];
+	$fullname = $result['fullName'];
 	$email = $result['email'];
-	$my_date = $result['date_added'];
+	$my_date = $result['register_date'];
+	$paid = $result['paid'];
 
 	$json[] = array(
-
-		"username" => $username,
+		"user_id" => $user_id,
 		"fullname" => $fullname,
 		"email" => $email,
-		"admin_date" => $my_date
+		"admin_date" => $my_date,
+		"paid" => $paid
 		);
 }
 
