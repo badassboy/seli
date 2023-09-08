@@ -51,6 +51,15 @@ if (isset($_POST['login'])) {
 
     <!-- Custom styles for this template -->
     <link href="css/login.css" rel="stylesheet">
+
+    <style type="text/css">
+      .wrapper {
+        background-image:url("images/seliModel/login.jpeg");
+background-position: center center;
+background-repeat: no-repeat;
+background-size: cover;
+      }
+    </style>
   </head>
 
   <body>

@@ -58,6 +58,16 @@ require("classes/auth.php");
 
     <!-- Custom styles for this template -->
     <link href="css/register.css" rel="stylesheet">
+
+    <style type="text/css">
+      .wrapper {
+        background-image:url("images/seliModel/login.jpeg");
+background-position: center center;
+background-repeat: no-repeat;
+background-size: cover;
+      }
+    </style>
+
   </head>
 
   <body class="text-center">
