@@ -14,6 +14,7 @@ public function check_existing_user($email){
 
 public function RegisterUser($fullName,$email,$city,$phone,$gender,$password,$activation_code){
 		
+		$dbh = DB();
 		
 		$join_date = date("m.d.y");
 		$user =$this->check_existing_user($email);

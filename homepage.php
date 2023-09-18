@@ -7,43 +7,12 @@
 // 	header("Location:index.php");
 // 	exit();
 // }
-	require("db.php");
-
-	$dbh = DB();
-
-	$sql = "SELECT * FROM questions";
-	$stmt = $dbh->prepare($sql);
-	$stmt->execute();
-	$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+require("classes/pagination.php");
+$quest = new Questions();
+$questionId = "";
 
 
-// the page to display
-	 $page = isset($_GET['page']) ? $_GET['page'] : 1;
-	// the number of records to display per page
-	$page_size = 1;
 
-	// calculate total number of records and total number of page
-	$total_records = count($data);
-	$total_pages = ceil($total_records / $page_size);
-
-	// validation: Page to display cannot be greater than the total number of pages
-	if ($page > $total_pages) {
-		$page = $total_pages;
-	}
-
-	// validation: Page to display cannot be less than 1
-	if ($page < 1) {
-		$page = 1;
-	}
-
-	// calculate the position of the first record of the page to display
-	$offset = ($page - 1) *$page_size;
-
-
-	// get a subset of records to be dislayed from the array
-	$data = array_slice($data, $offset, $page_size);
-	// echo gettype($data);
-	// var_dump($data);
 ?>
 
 
@@ -80,43 +49,55 @@
 		
 		<!-- end of video player -->
 		 
-		 
-		
-			
-				<!-- user based question -->
+		 <!-- user based question -->
 	<div class="container questions">
 					
 			<h5>PART 1 QUESTIONS</h5>	
 	<div class="form-group">
-		<?php foreach ($data as  $row) 
+		<?php 
+		$data = $quest->displayQuestionText();
+		foreach ($data as  $row) 
 			{ 
-				$scenario = $row['scenario'];
-				echo $scenario;
+				$questionId = $row["questionId"];
+				// echo $questionId;
 				
 			?>
 
 		
 	<p class="scenario">Scenario:<?php echo $row['scenario']; ?></p>
+		<?php } ?>
+		<!-- end of displaying questions here -->
+
+		<!-- display option here -->
+
+		<?php 
+		$options = $quest->displayOptions($questionId);
+		
+		?>
+		
+		<form method="post" action="">
+			<?php
+		$index  = 0;
+		foreach($options as $option){
+			$index= $index+1;
+		?>
+
+	
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-  <label class="form-check-label" for="exampleRadios1">
-    <?php echo $row['ans1']; ?>
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-  <label class="form-check-label" for="exampleRadios2">
-   <?php echo $row['ans2']; ?>
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
-  <label class="form-check-label" for="exampleRadios3">
-   <?php echo $row['ans3']; ?>
+  <input class="form-check-input"  type="radio" name="exampleRadios"  value="<?php echo $index; ?>">
+  <label class="form-check-label" for="exampleRadios<?php echo $index?>">
+    <?php echo $option["answer_text"]; ?>
+  
+
   </label>
 </div>
 
-<?php } ?>
+<?php }?>
+</form>
+		
+
+		
+
 
 </div>
 <!-- end of form group -->
@@ -132,10 +113,13 @@
 
 	 ?>
   <ul class="pagination justify-content-center" style="margin: 20px 0;">
-  	<a href="homepage.php?page=<?php echo $page_first; ?>">« First</a>
-<a href="homepage.php?page=<?php echo $page_prev; ?>">Prev</a>
-<a href="homepage.php?page=<?php echo $page_next; ?>">Next</a>
-<a href="homepage.php?page=<?php echo $page_last; ?>">Last »</a>
+  	<!-- <a href="homepage.php?page=<?php echo $page_first; ?>">« First</a> -->
+<!-- <a href="homepage.php?page=<?php echo $page_prev; ?>">Prev</a> -->
+<!-- <a href="homepage.php?page=<?php echo $page_next; ?>" -->
+
+	<button onClick="captureRadioValue('homepage.php?page=<?php echo $page_next; ?>')" >Next</button>
+<!-- </a> -->
+<!-- <a href="homepage.php?page=<?php echo $page_last; ?>">Last »</a> -->
     <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li>
     
     <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
@@ -158,8 +142,18 @@
     </footer>
 <!-- footer -->
 
+
+
 			
-		
+		 <!-- Bootstrap core JavaScript
+    ================================================== -->
+   
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- script to process click event handler -->
+<script type="text/javascript" src="nextbutton.js"></script>
 
 
 
