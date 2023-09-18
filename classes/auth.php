@@ -108,12 +108,17 @@ public function RegisterUser($fullName,$email,$city,$phone,$gender,$password,$ac
 		$to = $email;
 		$subject = "Please activate your account";
 		$message = "Click <a href='.$activation_link.'>here</a> to activate your acccount";
-		// $header = "From:" . $email;
 
-		$headers[] = 'MIME-Version: 1.0';
-		$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+		// additional headers
+		$headers = "From: info@selimodel.com\r\n";
+$headers .= "Reply-To: no-reply@example.com\r\n";
+$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+		
 
-		return mail($to, $subject, $subject, implode("\r\n", $headers));
+		// $headers[] = 'MIME-Version: 1.0';
+		// $headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
+		return mail($to, $subject, $subject, $headers);
 
 		
 	}
