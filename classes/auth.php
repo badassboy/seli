@@ -105,6 +105,7 @@ public function RegisterUser($fullName,$email,$city,$phone,$gender,$password,$ac
 		$activation_link = "activation.php?email=$email&activation_code=$activation_code";
 
 		// set email body
+		$to = $email;
 		$subject = "Please activate your account";
 		$message = "Click <a href='.$activation_link.'>here</a> to activate your acccount";
 		// $header = "From:" . $email;
