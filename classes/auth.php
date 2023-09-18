@@ -99,18 +99,22 @@ public function RegisterUser($fullName,$email,$city,$phone,$gender,$password,$ac
 	}
 
 	// verify users email
-	public function send_activation_email(String $email, String $activation_code):void
+	public function send_activation_email(String $email, String $activation_code):bool
 	{
 		//activation link
 		$activation_link = "activation.php?email=$email&activation_code=$activation_code";
 
 		// set email body
 		$subject = "Please activate your account";
-		$message = "Click <a href='.$activation_link.'>here</a> to activate your acccount";;
-		$header = "From:" . $email;
+		$message = "Click <a href='.$activation_link.'>here</a> to activate your acccount";
+		// $header = "From:" . $email;
 
-		// send the mail
-		mail($email, $subject, nl2br($message), $header);
+		$headers[] = 'MIME-Version: 1.0';
+		$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
+		return mail($to, $subject, $subject, implode("\r\n", $headers));
+
+		
 	}
 
 	public function generate_activation_code():string
