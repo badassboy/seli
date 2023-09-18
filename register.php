@@ -20,7 +20,7 @@ require("classes/auth.php");
     if ($user) {
       
       // send activation email
-      $auth->send_activation_email($email,$activation_code);
+      // $auth->send_activation_email($email,$activation_code);
 
       // redirect user to login page
       $msg = '<div class="alert alert-success" role="alert">Please check your email to activate your email before signing in</div>';
