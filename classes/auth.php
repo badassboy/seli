@@ -118,7 +118,7 @@ $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 		// $headers[] = 'MIME-Version: 1.0';
 		// $headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
-		return mail($to, $subject, $subject, $headers);
+		return mail($to, $subject, $message, $headers);
 
 		
 	}
