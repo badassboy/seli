@@ -39,19 +39,19 @@ public function RegisterUser($fullName,$email,$city,$phone,$gender,$password,$ac
 	}
 
 	// get verified users from the database
-	public function find_user_by_email(string $email)
+	public function find_user_by_email($email)
 	{
 		$dbh = DB();
-		$stmt = $dbh->prepare("SELECT username, password, status FROM users WHERE email=:email");
+		$stmt = $dbh->prepare("SELECT * FROM users WHERE email = ?");
 		$stmt->execute([$email]);
 		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
 
 	// checks if a user is verified
-	public function is_user_verified($user)
-	{
-		return (int)$user['status'] === 1;
-	}
+	// public function is_user_verified($user)
+	// {
+	// 	return (int)$user['status'] === 1;
+	// }
 
 	// tthis function logs user in.
 	public function login_user($email,$password)
@@ -61,8 +61,8 @@ public function RegisterUser($fullName,$email,$city,$phone,$gender,$password,$ac
 		$verified_user = $this->find_user_by_email($email);
 
 	
-			if ($verified_user && $this->is_user_verified($verified_user) && 
-				password_verify($password, $verified_user['password'] )) {
+	if(($verified_user) &&
+				password_verify($password, $verified_user['password'])) {
 				return true;
 			}else {
 				return false;

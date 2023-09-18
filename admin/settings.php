@@ -303,23 +303,23 @@ $dbh = DB();
 
                        
                         
-                        var userID = response[i]["user_id"];
-                        var fullname = response[i]["fullname"];
-                        var email = response[i]["email"];
-                        var my_date = response[i]["admin_date"];
-                        var paid = response[i]["paid"];
-                  
-                        var action = "<a href='paid.php?id="+userID+"'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
+    var userID = response[i]["user_id"];
+    var fullname = response[i]["fullname"];
+    var email = response[i]["email"];
+    var my_date = response[i]["admin_date"];
+    var paid = response[i]["paid"];
 
-                        var table_str = "<tr>" +
-                                    
-                                    
-                                     "<td>" + fullname + "</td>" +
-                                     "<td>" + email + "</td>" +
-                                     "<td>" + my_date + "</td>" +
-                                      "<td id='paid'>" + paid + "</td>" +
-                                       "<td>" + action + "</td>" +
-                                     "</tr>";
+    var action = "<a href='paid.php?id="+userID+"'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
+
+    var table_str = "<tr>" +
+                
+                
+                 "<td>" + fullname + "</td>" +
+                 "<td>" + email + "</td>" +
+                 "<td>" + my_date + "</td>" +
+                  "<td id='paid'>" + paid + "</td>" +
+                   "<td>" + action + "</td>" +
+                 "</tr>";
 
 
                              $(".table tbody").append(table_str);

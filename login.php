@@ -14,7 +14,7 @@ if (isset($_POST['login'])) {
   $user = $auth->login_user($email,$password);
 
   if ($user) {
-    $_SESSION['user_id'] = $user['id']; 
+    $_SESSION['userId'] = $user['userId']; 
     header("Location:homepage.php");
     exit();
   }

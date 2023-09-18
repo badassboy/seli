@@ -8,7 +8,7 @@ $json = array();
 $stmt = $db->prepare("SELECT * FROM users");
 $stmt->execute();
 while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
-	$user_id = $result['id'];
+	$user_id = $result['userId'];
 	$fullname = $result['fullName'];
 	$email = $result['email'];
 	$my_date = $result['register_date'];
