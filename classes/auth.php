@@ -1,4 +1,5 @@
 <?php
+session_start();
 require("db.php");
 
 class Auth {
@@ -23,7 +24,7 @@ public function RegisterUser($fullName,$email,$city,$phone,$gender,$password,$ac
 		}else {
 
 
-		$hashed = password_hash($password,PASSWORD_BCRYPT);
+		$hashed = password_hash($password,PASSWORD_DEFAULT);
 		$stmt = $dbh->prepare("INSERT INTO users(fullName,email,city,phone,gender,
 			password,register_date,activation_code) VALUES(?,?,?,?,?,?,?,?)");
 		$stmt->execute([$fullName,$email,$city,$phone,$gender,$hashed,$join_date,
@@ -57,16 +58,23 @@ public function RegisterUser($fullName,$email,$city,$phone,$gender,$password,$ac
 	public function login_user($email,$password)
 	{
 
-		// find verified users
-		$verified_user = $this->find_user_by_email($email);
+		$dbh = DB();
+		$stmt = $dbh->prepare("SELECT userId,email,password FROM users WHERE email = ?");
 
-	
-	if(($verified_user) &&
-				password_verify($password, $verified_user['password'])) {
-				return true;
-			}else {
-				return false;
-			}
+		$stmt->execute([$email]);
+		$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		foreach ($data as $row) {
+			$user_password = $row["password"];
+ if(password_verify($password, $user_password)){
+			 	$_SESSION['id'] = $row['userId'];
+				return $_SESSION['id'];
+			 }else{
+			 	return false;
+			 }
+				
+			// echo $user_password;
+		}
+		
 			
 		
 

@@ -1,23 +1,29 @@
 <?php
-session_start();
+// session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 require("classes/auth.php");
 $auth = new Auth();
 
 
 if (isset($_POST['login'])) {
 
-  
-  
-  $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-  $password = trim($_POST['password']);
+  $email = $_POST['email'];
+  echo $email;
+
+  $password = $_POST['password'];
+  echo $password;
 
   $user = $auth->login_user($email,$password);
 
   if ($user) {
-    $_SESSION['userId'] = $user['userId']; 
+    
     header("Location:homepage.php");
     exit();
+    // session_write_close();
   }
+}else {
+  echo "form not submitted";
 }
 
 
@@ -84,7 +90,7 @@ background-size: cover;
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
       <label for="inputEmail" class="sr-only">Email address</label>
-      <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required>
       <br>
 
       <label for="inputPassword" class="sr-only">Password</label>

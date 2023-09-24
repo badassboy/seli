@@ -1,26 +1,36 @@
 <?php
-// session_start();
-require("db.php");
-
-	$dbh = DB();
-
-if (isset($_POST["selectedValue"]) && isset($_POST['pageLetter'])) {
-
-	$selectedValue = $_POST["selectedValue"];
-	$pageLetter = $_POST['pageLetter'];
-
-	// grab the score based on selected value.
+session_start();
+require("classes/pagination.php");
+$quest = new Questions();
 	
-	
-	
-// insert selected radio and currentPageLetter into the database.
-$sql = "INSERT INTO part1(alphabet,answer) VALUES(?,?)";
-$stmt = $dbh->prepare($sql);
-$stmt->execute([$pageLetter,$selectedValue]);
-	
+	// require(db.php);
+	// $dbh = DB();
+	$selectedValue ="";
+	$userId = "";
+	$questionId = "";
+
+if (isset($_POST["selectedValue"]) && isset($_SESSION['id']) && isset($_POST['questionId'])) {
+
+	// get selected option
+$selectedValue = $_POST["selectedValue"];
+$userId = $_SESSION['id'];
+$questionId = $_POST['questionId'];
+
+$quest->insertUserAnswer($userId,$questionId,$selectedValue);
 }else {
-	echo "value not reaching server";
+	echo "No data received";
 }
+
+
+
+
+	
+
+
+	
+	
+	
+
 
 
 ?>

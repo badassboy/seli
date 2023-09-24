@@ -1,18 +1,15 @@
 <?php
-session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-if (!$_SESSION["id"]) {
-    header("Location:index.php");
-    exit();
-}
-
-
-
+// checking if user is logged in using sessions.
+// session_start();
+// if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == "true") {
+	
+// }else{
+// 	header("Location:index.php");
+// 	exit();
+// }
 require("classes/pagination.php");
 $quest = new Questions();
 $questionId = "";
-$alphabet = "";
 
 
 
@@ -58,7 +55,7 @@ $alphabet = "";
 			<h5>PART 1 QUESTIONS</h5>	
 	<div class="form-group">
 		<?php 
-		$data = $quest->displayQuestionText();
+		$data = $quest->displayQuestion3Text();
 		foreach ($data as  $row) 
 			{ 
 				$questionId = $row["questionId"];
@@ -82,14 +79,12 @@ $alphabet = "";
 			<?php
 		$index  = 0;
 		foreach($options as $option){
-			$alphabet = $option['option_letter'];
-			// echo $alphabet;
 			$index= $index+1;
 		?>
 
 	
 <div class="form-check">
-  <input class="form-check-input"  type="radio" name="exampleRadios"  value="<?php echo $alphabet; ?>">
+  <input class="form-check-input"  type="radio" name="exampleRadios"  value="<?php echo $index; ?>">
   <label class="form-check-label" for="exampleRadios<?php echo $index?>">
     <?php echo $option["option_text"]; ?>
   
@@ -122,7 +117,7 @@ $alphabet = "";
 <!-- <a href="homepage.php?page=<?php echo $page_prev; ?>">Prev</a> -->
 <!-- <a href="homepage.php?page=<?php echo $page_next; ?>" -->
 
-	<button onClick="captureRadioValue('homepage.php?page=<?php echo $page_next; ?>','<?php echo $questionId; ?>','<?php echo $page_last;?>')" >Next</button>
+	<button onClick="captureRadioValue('part3.php?page=<?php echo $page_next; ?>')" >Next</button>
 <!-- </a> -->
 <!-- <a href="homepage.php?page=<?php echo $page_last; ?>">Last »</a> -->
     <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -158,7 +153,7 @@ $alphabet = "";
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!-- script to process click event handler -->
-<script type="text/javascript" src="nextbutton.js"></script>
+<script type="text/javascript" src="part3nextbutton.js"></script>
 
 
 
