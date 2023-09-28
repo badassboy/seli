@@ -47,7 +47,7 @@ class Questions {
 
 	// display question options
 	public function displayOptions($questionId){
-
+		// global $options;
 	$dbh = DB();
 	$sql = "SELECT question_options.option_text, question_options.option_letter FROM
 		question_options INNER JOIN questions ON 
@@ -60,21 +60,16 @@ class Questions {
 
 	}
 
-	public function getValueForSelectedRadio($selectedValue){
+	
 
-		
-	}
 
-	// display part 2 questions and scenario.
-	public function displayQuestion2Text(){
+	public function getCategory2Questions(){
 		global $page,$total_pages;
 		$dbh = DB();
 	$sql = "SELECT * FROM questions WHERE categoryId=2";
-		
 	$stmt = $dbh->prepare($sql);
 	$stmt->execute();
 	$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	
 	// then page to display
 	 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 	// the number of records to display per page
@@ -101,15 +96,11 @@ class Questions {
 	// get a subset of records to be dislayed from the array
 	$data = array_slice($data, $offset, $page_size);
 	return $data;
-
 	}
 
 
-	
-
-
 	// display part 3 question and scenario.
-	public function displayQuestion3Text(){
+	public function getCategory3Questions(){
 		global $page,$total_pages;
 		$dbh = DB();
 	$sql = "SELECT * FROM questions WHERE categoryId=3";
@@ -149,20 +140,40 @@ class Questions {
 
 // insert userId,questionId and selectedValue into the answers table.
 public function insertUserAnswer($userId,$questionId,$selectedValue){
+
+	try{
 		$dbh = DB();
 $sql = "INSERT INTO answers(userId,questionId,selected_answer_letter) VALUES (?,?,?)";
 $stmt = $dbh->prepare($sql);
 return $stmt->execute([$userId,$questionId,$selectedValue]);
 
+	}catch(PDOException $ex){
+		echo "Error: " .$ex->getMessage();
+
+	}
+
+		
+
 	}
 
 	// grab user ID through session
 	public function checkUserSession(){
+		try{
 
-	if (isset($_SESSION['id'])) {
+			if (isset($_SESSION['id'])) {
 		return $_SESSION['id'];
 		
+	}else{
+	throw new Exception("User session doesn't exist");
 	}
+
+		}catch(PDOException $ex){
+			echo 'Error: ' .$ex->getMessage();
+		}
+
+		// end session when done
+		session_write_close();
+	
 }
 
 	
@@ -171,13 +182,16 @@ public function getLettersForCategoryTwo()
 {
 
 	$dbh = DB();
-$sql = "SELECT a.userId, a.questionId,a.selected_answer_letter, qo.option_value
+	$sql = "SELECT q.question_letter
 FROM answers a
 JOIN question_options qo
 ON a.questionId=qo.questionId and a.selected_answer_letter=qo.option_letter
+JOIN questions q ON q.questionId=qo.questionId
 where a.userId = ".$this->checkUserSession()."
 Order by qo.option_value desc
 limit 3";
+
+
 
 $stmt = $dbh->prepare($sql);
 $stmt->execute();
@@ -197,11 +211,64 @@ JOIN question_options qo
 ON a.questionId=qo.questionId and a.selected_answer_letter=qo.option_letter
 where a.userId = ".$this->checkUserSession()."
 Order by qo.option_value desc
-limit 15 OFFSET 14";
+limit 4 OFFSET 3";
 
 $stmt = $dbh->prepare($sql);
 $stmt->execute();
 return $stmt->fetchAll();
+
+}
+
+public function assignAlphabet($items, $alphabets){
+	try{
+
+		// Calculate the number of rows each alphabet should have
+    $rowsPerAlphabet = floor(count($items) / count($alphabets));
+
+    // Create an array with repeated alphabets to achieve the desired distribution
+    $assignedAlphabets = array();
+    foreach ($alphabets as $alphabet) {
+        $assignedAlphabets = array_merge($assignedAlphabets, array_fill(0, $rowsPerAlphabet, $alphabet));
+    }
+
+    // Shuffle the array of assigned alphabets to ensure randomness
+    shuffle($assignedAlphabets);
+
+    // var_dump($items);
+    
+    for ($i = 1; $i < count($items); $i++) {
+    $items[$i]["question_letter"] = $assignedAlphabets[$i];
+        // print_r($items[$i]);
+
+    }
+
+	}catch(DivisionByZeroError $e){
+		// echo $e->getMessage();
+	}
+	
+
+
+
+    // Return the items array with alphabets assigned
+    return $items;
+}
+
+
+public function plotUserDataGraph()
+{
+	$dbh = DB();
+	$sql = "SELECT a.selected_answer_letter, sum(qo.option_value) option_value
+FROM answers a
+JOIN question_options qo
+ON a.questionId=qo.questionId and a.selected_answer_letter=qo.option_letter
+JOIN questions q ON q.questionId=qo.questionId
+where a.userId = ".$this->checkUserSession()."
+Group by a.selected_answer_letter";
+
+	$stmt = $dbh->prepare($sql);
+	$stmt->execute();
+	return $stmt->fetchAll();
+
 
 }
 

@@ -1,4 +1,5 @@
-function captureRadioValue(nextPage,questionId,lastPage) {
+function captureRadioValue(nextPage,questionId,lastPage,
+	page,totalPage) {
 		// console.log("ama");
    	let selectedValue = "";
    var radioButtons = document.querySelectorAll('input[name="exampleRadios"]');
@@ -20,12 +21,14 @@ function captureRadioValue(nextPage,questionId,lastPage) {
    				
    				},
    			success: function(response){
-   				// console.log(response.html);
-   				// go the next page
-			location.href = nextPage;
-			if (nextPage == lastPage) {
-				location.href = "part1_end.php";
-			}
+   				if (page < totalPage) {
+   					location.href = nextPage;
+   				}else{
+   					location.href = "part1_end.php";
+   				}
+   				
+			
+			
 
    			},
    			error:function(error){

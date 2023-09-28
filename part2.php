@@ -7,9 +7,14 @@
 // 	header("Location:index.php");
 // 	exit();
 // }
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 require("classes/pagination.php");
 $quest = new Questions();
 $questionId = "";
+$questionIds = [];
+$options = [];
+
 
 ?>
 
@@ -38,12 +43,12 @@ $questionId = "";
 	<div class="container-fluid wrapper">
 		
 		<!-- video player -->
-		<div class="container uservideo">
+		<!-- <div class="container uservideo">
 			<video width="320" height="240" controls>
 		  <source src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" type="video/mp4">
 		  	Your browser does not support the video tag.
 		</video>
-		</div>
+		</div> -->
 		
 		<!-- end of video player -->
 		 
@@ -54,45 +59,65 @@ $questionId = "";
 	<div class="form-group">
 
 			<?php 
-		$data = $quest->displayQuestion2Text();
-		foreach ($data as  $row) 
+
+			$test = $quest->getLettersForCategoryTwo();
+			
+		$t = array_column($test, "question_letter");
+		
+$data = $quest->getCategory2Questions();
+		// var_dump($data);
+	$resultArray= $quest->assignAlphabet($data, $t);
+	// var_dump($resultArray);
+
+		foreach ($resultArray as  $row) 
 			{ 
-				$questionId = $row['questionId'];
-				
-				
+
+			$questionId = $row["questionId"];
+
+				// echo $questionId;
+			$quest->displayOptions($questionId);
+			// var_dump($options);
+			$questionIds[] = $questionId;
+			// var_dump($questionIds);
+
 			?>
 
-	<p>Scenario:<?php echo $row['scenario']; ?></p>
-<?php } ?>
-	
-		<?php 
-		$options = $quest->displayOptions($questionId);
-		
-		?>
+			<p>Scenario:<?php echo  $row['scenario']; ?></p>
+		<?php } ?>
 
-		
+			<!-- display options here -->
 	<form method="post" action="">
 
 			<?php
-		$index  = 0;
-		foreach($options as $option){
-			$index= $index+1;
-		?>
 
-<div class="form-check">
-  <input class="form-check-input"  type="radio" name="exampleRadios"  value="">
-  <label class="form-check-label" for="exampleRadios">
-    <?php echo $option["option_text"]; ?>
+				foreach ($questionIds as $qid) {
+    $options = $quest->displayOptions($qid);
+    // var_dump($options);
+
+    	// $index  = 0;
+		foreach($options as $option){
+			// echo $option['option_letter'];
+	// $index= $index+1;
+
+  echo '
+
+	<div class="form-check">
+  <input class="form-check-input"  type="radio" name="exampleRadios"  value="'.$option["option_letter"].'">
+  <label class="form-check-label" for="exampleRadios">'.$option["option_text"].'
   </label>
 </div>
+';
 
-<?php } ?>
+}
+
+}
+
+
+
+?>
+
 </form>
 		
-
-		
-
-
 </div>
 <!-- end of form group -->
 
@@ -109,7 +134,8 @@ $questionId = "";
   <ul class="pagination justify-content-center" style="margin: 20px 0;">
   
 
-	<button onClick="captureRadioValue('part2.php?page=<?php echo $page_next; ?>')" >Next</button>
+	<button onClick="captureRadioValue('part2.php?page=<?php echo $page_next; ?>'
+	,'<?php echo $questionId; ?>','<?php echo $page ?>','<?php echo $total_pages; ?>')" >Next</button>
 
   </ul>
 

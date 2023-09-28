@@ -1,14 +1,22 @@
-    <?php
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+require("classes/pagination.php");
+$quest = new Questions();
 
-    
-     
-    $dataPoints = array( 
-    	array("y" => 7,"label" => "March" ),
-    	array("y" => 12,"label" => "April" ),
-    	array("y" => 28,"label" => "May" ),
-    	array("y" => 18,"label" => "June" ),
-    	array("y" => 41,"label" => "July" )
+$dataPoints = array();
+
+$userData = $quest->plotUserDataGraph();
+foreach($userData as $value){
+    $data = array(
+        "y" => $value['option_value'], "label" => $value['selected_answer_letter']
     );
+
+    array_push($dataPoints, $data);
+    
+}
+
+
      
     ?>
     <!DOCTYPE HTML>
@@ -18,25 +26,25 @@
     window.onload = function() {
      
     var chart = new CanvasJS.Chart("chartContainer", {
-    	animationEnabled: true,
-    	title:{
-    		text: "Revenue Chart of Acme Corporation"
-    	},
-    	axisY: {
-    		title: "Revenue (in USD)",
-    		includeZero: true,
-    		prefix: "$",
-    		suffix:  "k"
-    	},
-    	data: [{
-    		type: "bar",
-    		yValueFormatString: "$#,##0K",
-    		indexLabel: "{y}",
-    		indexLabelPlacement: "inside",
-    		indexLabelFontWeight: "bolder",
-    		indexLabelFontColor: "white",
-    		dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-    	}]
+        animationEnabled: true,
+        title:{
+            text: "Plot of user score"
+        },
+        axisY: {
+            title: "Sum of points",
+            includeZero: false,
+            prefix: "",
+            suffix:  ""
+        },
+        data: [{
+            type: "column",
+            yValueFormatString: "",
+            indexLabel: "{y}",
+            indexLabelPlacement: "inside",
+            indexLabelFontWeight: "bolder",
+            indexLabelFontColor: "white",
+            dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+        }]
     });
     chart.render();
      

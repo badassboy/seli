@@ -1,17 +1,10 @@
 <?php
-// checking if user is logged in using sessions.
-// session_start();
-// if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == "true") {
-	
-// }else{
-// 	header("Location:index.php");
-// 	exit();
-// }
+
 
 if (isset($_POST['part2'])) {
 	
 	// navigate to part 2.
-	header("Location:part2.php");
+	header("Location:part3.php");
 	exit();
 
 }
@@ -52,14 +45,19 @@ if (isset($_POST['part2'])) {
 		 <!-- user based question -->
 	<div class="container questions">
 					
-			
-	<div class="form-group">
+					<form method="post">
 
-		<h3>End of Part 1</h3>
+						<div class="form-group">
+
+		<h3>End of Part 2</h3>
 		<p>Click below button to enter Part 2</p>
 		<button type="submit" name="part2">Go</button>
 		
 </div>
+						
+					</form>
+			
+	
 <!-- end of form group -->
 
 <!-- pagination tabs. -->
@@ -95,7 +93,7 @@ if (isset($_POST['part2'])) {
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!-- script to process click event handler -->
-<script type="text/javascript" src="nextbutton.js"></script>
+<!-- <script type="text/javascript" src="nextbutton.js"></script> -->
 
 
 

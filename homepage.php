@@ -8,7 +8,6 @@ if (!$_SESSION["id"]) {
 }
 
 
-
 require("classes/pagination.php");
 $quest = new Questions();
 $questionId = "";
@@ -122,7 +121,7 @@ $alphabet = "";
 <!-- <a href="homepage.php?page=<?php echo $page_prev; ?>">Prev</a> -->
 <!-- <a href="homepage.php?page=<?php echo $page_next; ?>" -->
 
-	<button onClick="captureRadioValue('homepage.php?page=<?php echo $page_next; ?>','<?php echo $questionId; ?>','<?php echo $page_last;?>')" >Next</button>
+	<button onClick="captureRadioValue('homepage.php?page=<?php echo $page_next; ?>','<?php echo $questionId; ?>','<?php echo $page; ?>','<?php echo $total_pages; ?>')" >Next</button>
 <!-- </a> -->
 <!-- <a href="homepage.php?page=<?php echo $page_last; ?>">Last »</a> -->
     <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li>
