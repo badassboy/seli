@@ -1,12 +1,4 @@
 <?php
-// checking if user is logged in using sessions.
-// session_start();
-// if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == "true") {
-	
-// }else{
-// 	header("Location:index.php");
-// 	exit();
-// }
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require("classes/pagination.php");
@@ -14,6 +6,7 @@ $quest = new Questions();
 $questionId = "";
 $questionIds = [];
 $options = [];
+$question_letter = "";
 
 
 ?>
@@ -28,7 +21,7 @@ $options = [];
 	<title></title>
 	 <!-- Bootstrap core CSS -->
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="css/homepage.css">
+	<!-- <link rel="stylesheet" type="text/css" href="css/homepage.css"> -->
 	<link rel="stylesheet" type="text/css" href="cover.css">
 
 
@@ -60,19 +53,24 @@ $options = [];
 
 			<?php 
 
-			$test = $quest->getLettersForCategoryTwo();
-			
-		$t = array_column($test, "question_letter");
+
+
 		
-$data = $quest->getCategory2Questions();
+		// var_dump($t);
+		
+$data = $quest->getCategory2Questions3();
 		// var_dump($data);
-	$resultArray= $quest->assignAlphabet($data, $t);
+	
 	// var_dump($resultArray);
 
-		foreach ($resultArray as  $row) 
+		foreach ($data as  $row) 
 			{ 
+			 // var_dump($resultArray);
+
+				// print_f($row);
 
 			$questionId = $row["questionId"];
+			$question_letter = $row['question_letter'];
 
 				// echo $questionId;
 			$quest->displayOptions($questionId);
@@ -96,6 +94,8 @@ $data = $quest->getCategory2Questions();
 
     	// $index  = 0;
 		foreach($options as $option){
+		
+
 			// echo $option['option_letter'];
 	// $index= $index+1;
 
@@ -125,17 +125,33 @@ $data = $quest->getCategory2Questions();
 	<nav aria-label="Page navigation example">
 	<?php
 		// displaying pagination links
+
+
+// echo $page;
 	$page_first = $page > 1 ? 1: "";
+	
 	$page_prev = $page > 1 ? $page-1: "";
+	
 	$page_next = $page < $total_pages ? $page + 1 : "";
+
 	$page_last  = $page < $total_pages ? $total_pages : '';
+
+	// echo $page_first;
+	echo "<br>";
+// echo $page_prev;
+echo "<br>";
+// echo $page_next;
+echo "<br>";
+	// echo $page_last;
+
+
 
 	 ?>
   <ul class="pagination justify-content-center" style="margin: 20px 0;">
   
 
 	<button onClick="captureRadioValue('part2.php?page=<?php echo $page_next; ?>'
-	,'<?php echo $questionId; ?>','<?php echo $page ?>','<?php echo $total_pages; ?>')" >Next</button>
+	,'<?php echo $questionId; ?>','<?php echo $question_letter; ?>','<?php echo $page; ?>','<?php echo $total_pages; ?>')" >Next</button>
 
   </ul>
 
@@ -149,11 +165,11 @@ $data = $quest->getCategory2Questions();
 <!-- end of whole div -->
 
 <!-- footer -->
- <footer class="footer text-center">
+<!--  <footer class="footer text-center">
       <div class="container">
         <span class="text-white">Copyright at 2023</span>
       </div>
-    </footer>
+    </footer> -->
 <!-- footer -->
 
 

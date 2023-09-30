@@ -23,7 +23,7 @@ if (isset($_POST['login'])) {
     // session_write_close();
   }
 }else {
-  echo "form not submitted";
+  // echo "form not submitted";
 }
 
 

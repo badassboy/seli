@@ -17,10 +17,7 @@ if (isset($_POST['part2'])) {
 }
 
 
-
-
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -52,14 +49,18 @@ if (isset($_POST['part2'])) {
 		 <!-- user based question -->
 	<div class="container questions">
 					
-			
-	<div class="form-group">
+			<form method="post">
+
+				<div class="form-group">
 
 		<h3>End of Part 1</h3>
 		<p>Click below button to enter Part 2</p>
 		<button type="submit" name="part2">Go</button>
 		
 </div>
+				
+			</form>
+	
 <!-- end of form group -->
 
 <!-- pagination tabs. -->

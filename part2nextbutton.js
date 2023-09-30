@@ -1,16 +1,21 @@
-let  c
+function captureRadioValue(nextPage,questionId,
+    questionLetter,page,totalPage) {
 
-function captureRadioValue(nextPage,questionId,page,totalPage) {
+// alert(nextPage + questionId + questionLetter + page + totalPage);
+// alert(nextPage);
+
 		// console.log("ama");
    	let selectedValue = "";
    var radioButtons = document.querySelectorAll('input[name="exampleRadios"]');
-
+ console.log(page);
+                // console.log(nextPage);
+                // console.log(totalPage);
   for(const radioButton of radioButtons){
    	
 				if(radioButton.checked){
 					// console.log("checked");
    		selectedValue = radioButton.value;
-   		console.log("hi");
+   		// console.log("hi");
 			// console.log(selectedValue);
    			$.ajax({
    			type:"POST",
@@ -18,10 +23,11 @@ function captureRadioValue(nextPage,questionId,page,totalPage) {
    			
    			data:{
    				selectedValue: selectedValue,
-   				questionId: questionId
+   				questionId: questionId,
+                questionLetter:questionLetter
    				},
    			success: function(response){
-
+               
    				 // Check if there is a next page
                     if (page < totalPage) {
                         // Go to the next page

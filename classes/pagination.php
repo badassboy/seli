@@ -60,16 +60,43 @@ class Questions {
 
 	}
 
-	
-
-
-	public function getCategory2Questions(){
+	public function  getCategory2Questions(){
 		global $page,$total_pages;
 		$dbh = DB();
 	$sql = "SELECT * FROM questions WHERE categoryId=2";
 	$stmt = $dbh->prepare($sql);
 	$stmt->execute();
 	$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	return $data;
+
+	}
+
+	public function  getCategory3Questions(){
+		global $page,$total_pages;
+		$dbh = DB();
+	$sql = "SELECT * FROM questions WHERE categoryId=3";
+	$stmt = $dbh->prepare($sql);
+	$stmt->execute();
+	$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	return $data;
+
+	}
+
+	
+
+
+	public function getCategory2Questions3(){
+		global $page,$total_pages;
+
+		$test = $this->getLettersForCategoryTwo();
+		// print_r($test);
+			
+		$t = array_column($test, "question_letter");
+		$resultArray = $this->getCategory2Questions();
+		$data= $this->assignAlphabet($resultArray, $t);
+		// echo $data;
+
+		
 	// then page to display
 	 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 	// the number of records to display per page
@@ -100,14 +127,18 @@ class Questions {
 
 
 	// display part 3 question and scenario.
-	public function getCategory3Questions(){
+	public function getAllcategory3Info(){
 		global $page,$total_pages;
-		$dbh = DB();
-	$sql = "SELECT * FROM questions WHERE categoryId=3";
 		
-	$stmt = $dbh->prepare($sql);
-	$stmt->execute();
-	$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	$test = $this->getLettersForCategoryThree();
+		// print_r($test);
+			
+	$t = array_column($test, "question_letter");
+	// print_r($t);
+	$resultArray = $this->getCategory3Questions();
+	$data= $this->assignAlphabet($resultArray, $t);
+	
 	
 	// then page to display
 	 $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -139,13 +170,14 @@ class Questions {
 	}
 
 // insert userId,questionId and selectedValue into the answers table.
-public function insertUserAnswer($userId,$questionId,$selectedValue){
+public function insertUserAnswer($userId,$questionId,$selectedValue,$questionLetter){
 
 	try{
 		$dbh = DB();
-$sql = "INSERT INTO answers(userId,questionId,selected_answer_letter) VALUES (?,?,?)";
+$sql = "INSERT INTO answers(userId,questionId,selected_answer_letter,question_letter) VALUES (?,?,?,?)";
 $stmt = $dbh->prepare($sql);
-return $stmt->execute([$userId,$questionId,$selectedValue]);
+return $stmt->execute([$userId,$questionId,$selectedValue,
+$questionLetter]);
 
 	}catch(PDOException $ex){
 		echo "Error: " .$ex->getMessage();
@@ -189,10 +221,7 @@ ON a.questionId=qo.questionId and a.selected_answer_letter=qo.option_letter
 JOIN questions q ON q.questionId=qo.questionId
 where a.userId = ".$this->checkUserSession()."
 Order by qo.option_value desc
-limit 3";
-
-
-
+limit 2";
 $stmt = $dbh->prepare($sql);
 $stmt->execute();
 return $stmt->fetchAll();
@@ -205,13 +234,14 @@ public function getLettersForCategoryThree()
 {
 
 	$dbh = DB();
-$sql = "SELECT a.userId, a.questionId,a.selected_answer_letter, qo.option_value
+$sql = "SELECT q.question_letter
 FROM answers a
 JOIN question_options qo
 ON a.questionId=qo.questionId and a.selected_answer_letter=qo.option_letter
+JOIN questions q ON q.questionId=qo.questionId
 where a.userId = ".$this->checkUserSession()."
 Order by qo.option_value desc
-limit 4 OFFSET 3";
+limit 2";
 
 $stmt = $dbh->prepare($sql);
 $stmt->execute();
@@ -220,36 +250,41 @@ return $stmt->fetchAll();
 }
 
 public function assignAlphabet($items, $alphabets){
-	try{
 
-		// Calculate the number of rows each alphabet should have
-    $rowsPerAlphabet = floor(count($items) / count($alphabets));
+	 // echo(count($alphabets));
+     // echo(count($items));
+	// try{
+$rowsPerAlphabet = floor(count($items) / count($alphabets));
+    // echo $rowsPerAlphabet;
+   
 
     // Create an array with repeated alphabets to achieve the desired distribution
     $assignedAlphabets = array();
     foreach ($alphabets as $alphabet) {
+    	// echo "ji";
         $assignedAlphabets = array_merge($assignedAlphabets, array_fill(0, $rowsPerAlphabet, $alphabet));
     }
 
     // Shuffle the array of assigned alphabets to ensure randomness
     shuffle($assignedAlphabets);
 
-    // var_dump($items);
+    // print_r($items[1]['question_letter']);
+    // echo(count($assignedAlphabets));
+   
     
-    for ($i = 1; $i < count($items); $i++) {
+    for ($i = 0; $i < count($items); $i++) {
+    	// echo "ama";
     $items[$i]["question_letter"] = $assignedAlphabets[$i];
-        // print_r($items[$i]);
+        // ($items);
 
     }
 
-	}catch(DivisionByZeroError $e){
-		// echo $e->getMessage();
-	}
-	
 
+	// }catch(DivisionByZeroError $e){
 
-
-    // Return the items array with alphabets assigned
+	// }
+    
+	// Return the items array with alphabets assigned
     return $items;
 }
 
@@ -257,13 +292,13 @@ public function assignAlphabet($items, $alphabets){
 public function plotUserDataGraph()
 {
 	$dbh = DB();
-	$sql = "SELECT a.selected_answer_letter, sum(qo.option_value) option_value
+	$sql = "SELECT a.question_letter, sum(qo.option_value) option_value
 FROM answers a
 JOIN question_options qo
 ON a.questionId=qo.questionId and a.selected_answer_letter=qo.option_letter
 JOIN questions q ON q.questionId=qo.questionId
 where a.userId = ".$this->checkUserSession()."
-Group by a.selected_answer_letter";
+Group by a.question_letter";
 
 	$stmt = $dbh->prepare($sql);
 	$stmt->execute();

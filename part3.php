@@ -28,7 +28,7 @@ $options = [];
 	<title></title>
 	 <!-- Bootstrap core CSS -->
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="css/homepage.css">
+	<!-- <link rel="stylesheet" type="text/css" href="css/homepage.css"> -->
 	<link rel="stylesheet" type="text/css" href="cover.css">
 
 
@@ -43,12 +43,12 @@ $options = [];
 	<div class="container-fluid wrapper">
 		
 		<!-- video player -->
-		<!-- <div class="container uservideo">
+		<div class="container uservideo">
 			<video width="320" height="240" controls>
 		  <source src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" type="video/mp4">
 		  	Your browser does not support the video tag.
 		</video>
-		</div> -->
+		</div>
 		
 		<!-- end of video player -->
 		 
@@ -60,16 +60,12 @@ $options = [];
 
 			<?php 
 
-			$test = $quest->getLettersForCategoryThree();
 			
-		$t = array_column($test, "question_letter");
 		
-$data = $quest->getCategory3Questions();
-		// var_dump($data);
-	$resultArray= $quest->assignAlphabet($data, $t);
-	// var_dump($resultArray);
+$data = $quest->getAllCategory3Info();
+	
 
-		foreach ($resultArray as  $row) 
+		foreach ($data as  $row) 
 			{ 
 
 			$questionId = $row["questionId"];
@@ -82,7 +78,7 @@ $data = $quest->getCategory3Questions();
 
 			?>
 
-			<p>Scenario:<?php echo  $row['scenario']; ?></p>
+<p>Scenario:<?php echo wordwrap($row['scenario'],75, "<br>\n"); ?></p>
 		<?php } ?>
 
 			<!-- display options here -->

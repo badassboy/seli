@@ -1,17 +1,21 @@
 <?php
-session_start();
+// session_start();
+require("classes/pagination.php");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
+
 if (!$_SESSION["id"]) {
     header("Location:index.php");
     exit();
 }
 
 
-require("classes/pagination.php");
+
 $quest = new Questions();
 $questionId = "";
 $alphabet = "";
+$question_letter = "";
 
 
 
@@ -27,7 +31,7 @@ $alphabet = "";
 	<title></title>
 	 <!-- Bootstrap core CSS -->
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="css/homepage.css">
+	<!-- <link rel="stylesheet" type="text/css" href="css/homepage.css"> -->
 	<link rel="stylesheet" type="text/css" href="cover.css">
 
 
@@ -60,7 +64,10 @@ $alphabet = "";
 		$data = $quest->displayQuestionText();
 		foreach ($data as  $row) 
 			{ 
+				// var_dump($data);
 				$questionId = $row["questionId"];
+				$question_letter = $row['question_letter'];
+				// echo $question_letter
 				// echo $questionId;
 				
 			?>
@@ -98,12 +105,7 @@ $alphabet = "";
 
 <?php }?>
 </form>
-		
-
-		
-
-
-</div>
+	</div>
 <!-- end of form group -->
 
 <!-- pagination tabs. -->
@@ -117,16 +119,11 @@ $alphabet = "";
 
 	 ?>
   <ul class="pagination justify-content-center" style="margin: 20px 0;">
-  	<!-- <a href="homepage.php?page=<?php echo $page_first; ?>">« First</a> -->
-<!-- <a href="homepage.php?page=<?php echo $page_prev; ?>">Prev</a> -->
-<!-- <a href="homepage.php?page=<?php echo $page_next; ?>" -->
+  
 
-	<button onClick="captureRadioValue('homepage.php?page=<?php echo $page_next; ?>','<?php echo $questionId; ?>','<?php echo $page; ?>','<?php echo $total_pages; ?>')" >Next</button>
-<!-- </a> -->
-<!-- <a href="homepage.php?page=<?php echo $page_last; ?>">Last »</a> -->
-    <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    
-    <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
+	<button onClick="captureRadioValue('homepage.php?page=<?php echo $page_next; ?>'
+	,'<?php echo $questionId; ?>','<?php echo $question_letter; ?>','<?php echo $page; ?>','<?php echo $total_pages; ?>')" >Next</button>
+
   </ul>
 
 </nav>
@@ -139,7 +136,7 @@ $alphabet = "";
 <!-- end of whole div -->
 
 <!-- footer -->
- <footer class="footer text-center">
+ <footer class="footer text-center ">
       <div class="container">
         <span class="text-white">Copyright at 2023</span>
       </div>

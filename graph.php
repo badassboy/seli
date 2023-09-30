@@ -9,7 +9,7 @@ $dataPoints = array();
 $userData = $quest->plotUserDataGraph();
 foreach($userData as $value){
     $data = array(
-        "y" => $value['option_value'], "label" => $value['selected_answer_letter']
+        "y" => $value['option_value'], "label" => $value['question_letter']
     );
 
     array_push($dataPoints, $data);
