@@ -4,15 +4,16 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require("classes/auth.php");
 $auth = new Auth();
+$msg = "";
 
 
 if (isset($_POST['login'])) {
 
   $email = $_POST['email'];
-  echo $email;
+  // echo $email;
 
   $password = $_POST['password'];
-  echo $password;
+  // echo $password;
 
   $user = $auth->login_user($email,$password);
 
@@ -21,6 +22,10 @@ if (isset($_POST['login'])) {
     header("Location:homepage.php");
     exit();
     // session_write_close();
+  }else{
+    $msg = '<div class="alert alert-danger" role="alert">
+  Login Failed Or Contact Admin for approval
+</div>';
   }
 }else {
   // echo "form not submitted";
@@ -87,6 +92,9 @@ background-size: cover;
 
        <form class="form-signin" method="post">
       <!-- <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
+       <?php if (isset($msg)) echo $msg; ?>
+        
+
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
       <label for="inputEmail" class="sr-only">Email address</label>

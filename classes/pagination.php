@@ -31,6 +31,7 @@ class Questions {
 	// validation: Page to display cannot be less than 1
 	if ($page < 1) {
 		$page = 1;
+		
 	}
 
 	// calculate the position of the first record of the page to display

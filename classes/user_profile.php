@@ -8,37 +8,59 @@ class UserProfile {
 		$dbh = DB();
 		$stmt = $dbh->prepare("SELECT * FROM users");
 		$stmt->execute();
-		return $stmt->fetch(PDO::FETCH_ASSOC);
+		return $stmt->fetchAll();
 
 	}
 
-	public function checkOldPassword($password)
-	{
-		$dbh = DB();
-		$stmt = $dbh->prepare("SELECT * FROM users");
-		$stmt->execute();
-		$data =  $stmt->fetch(PDO::FETCH_ASSOC);
-		return password_verify($password, $data['password']);
+// 	public function checkOldPassword($user_id,$newPassword,$confirm_password)
+// 	{
+		
+// 		$data = $this->fetch_user_detail($user_id);
+// return password_verify($newPassword, $data['password']) && $this->verify_new_password($newPassword,$confirm_password);
 
-	}
+// 	}
 
-	public function verify_new_password($password,$confirm_password){
-		if ($password === $confirm_password) {
+
+	public function verify_new_password($newPassword,$confirm_password){
+		if ($newPassword === $confirm_password) {
 			return true;
 		}else{
 			return false;
 		}
 	}
 
-	public function change_password($user_id,$password){
-		$dbh = DB();
-		// check for old password existence in the database
-		if ($this->checkOldPassword() && $this->verify_new_password()) {
-			// update user's password
-			$sql = "UPDATE users SET password=? WHERE id=?";
-			$stmt = $dbh->prepare($sql);
-			return $stmt->execute([$password,$user_id]);
-		}
+	public function change_password($user_id,$newPassword,$confirm_password){
+		try{
+
+			$dbh = DB();
+// check if password matches
+if ($this->verify_new_password($newPassword,$confirm_password)){
+	// hash the new password before storing it inside the database.
+	$hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+	// update user's password
+	$sql = "UPDATE users SET password=? WHERE userId=?";
+	$stmt = $dbh->prepare($sql);
+	if ($stmt === false) {
+		//handle the case where the SQL statement preparation failed
+		return false;
+	}
+	$result = $stmt->execute([$hashedPassword,$user_id]);
+	if ($result) {
+		return true;
+	}else {
+		return false;
+	}
+
+
+
+}else {
+	return false;
+}
+
+}catch(Exception $e){
+	error_log("Error in chanfing password:". $e->getMessage());
+	return false;
+}
 
 
 	}
