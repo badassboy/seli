@@ -30,6 +30,7 @@ if (isset($_SESSION['id'])) {
   exit;
 }
 
+// update user's password
 if (isset($_POST['reset']) && isset($_SESSION['id'])) {
   $userId = $_SESSION['id'];
   // $old_password = $_POST['oldPassword'];

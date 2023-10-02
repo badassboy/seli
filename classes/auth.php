@@ -13,6 +13,8 @@ public function check_existing_user($email){
 
 }
 
+
+
 public function RegisterUser($fullName,$email,$city,$phone,$gender,$password,$activation_code){
 		
 		$dbh = DB();
@@ -59,13 +61,15 @@ public function RegisterUser($fullName,$email,$city,$phone,$gender,$password,$ac
 	{
 
 		$dbh = DB();
-		$stmt = $dbh->prepare("SELECT userId,email,password FROM users WHERE email = ?");
+		$stmt = $dbh->prepare("SELECT userId,email,password,paid FROM users WHERE email = ?");
 
 		$stmt->execute([$email]);
 		$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		foreach ($data as $row) {
+			// var_dump($data);
 			$user_password = $row["password"];
- if(password_verify($password, $user_password)){
+ if(password_verify($password, $user_password) &&
+	$row['paid'] == 1){
 			 	$_SESSION['id'] = $row['userId'];
 				return $_SESSION['id'];
 			 }else{

@@ -18,8 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 		$user = $ch->login($email,$pwd);
 		if ($user) {
-			// $_SESSION['email']=$email;
-			// $_SESSION['adimn_pass']=$pwd;
+			
 			header("Location: homepage.php");
 			exit;
 
