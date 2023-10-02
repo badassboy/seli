@@ -19,6 +19,10 @@ body {
   color: white !important;
 }
 
+.navbar .navbar-nav{
+  margin-left: 10%;
+}
+
 .wrapper {
 /*  background-color:#f2f2f2;*/
 /*background-color: yellow;*/
@@ -28,7 +32,7 @@ background-repeat: no-repeat;
 background-size: cover;
 /*backdrop-filter: blur(10px);*/
 
-  height: 600px;
+  height: 800px;
 }
 
 /*pagination*/
@@ -65,6 +69,61 @@ video {
   padding-top: 2.5%;
 }
 
+.btn-outline-success{
+  background-color: yellow;
+}
+
+/*about*/
+.about{
+  height: 400px;
+  background-color:#ffffff;
+}
+
+hgroup{
+  padding-top:5% ;
+  font-weight: bolder;
+  color: #000000;
+  font-size: 20px;
+}
+
+.info{
+   padding-top:3% ;
+  font-weight: bolder;
+  color: #000000;
+  font-size: 15px;
+}
+
+.expl{
+   padding-top:3% ;
+  font-weight: normal;
+  color: #000000;
+  font-size: 17px;
+}
+/*about*/
+
+/*users*/
+.users{
+  background-color: #f2f2f2;
+  height: 400px;
+}
+/*users*/
+.users header{
+  text-align: center;
+  padding-top: 3%;
+  font-weight: bolder;
+  font-size: 20px;
+}
+
+.card-title{
+  font-size: 16px;
+}
+
+.card{
+  margin-top: 5%;
+  border-radius: 5%;
+}
+.
+
 
 
 
@@ -77,6 +136,7 @@ video {
   line-height: 60px; /* Vertically center the text there */
 /*  background-color: #f5f5f5;*/
   background-color:#005C46;
+  height: 70px;
 }
 
 

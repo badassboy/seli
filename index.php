@@ -21,6 +21,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato&family=Roboto:wght@100&display=swap" rel="stylesheet">
 
+<!-- font awesome -->
+<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css">
+<!-- font awesome -->
+
 
     <!-- Custom styles for this template -->
     <link href="cover.css" rel="stylesheet">
@@ -28,10 +32,11 @@
 
   <body>
 
-    <div class="container-fluid">
+    <div class="container-fluid wrapper">
 
       <!-- navigation -->
-      <nav class="navbar navbar-expand-lg navbar-dark">
+      <?php include("nav.php"); ?>
+      <!-- <nav class="navbar navbar-expand-lg navbar-dark">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -53,7 +58,7 @@
       </ul>
    
   </div>
-</nav>
+</nav> -->
 
 <!-- navigation -->
 
@@ -96,6 +101,74 @@
  
   <!-- end of slider -->
 
+  <!-- about -->
+  <div class="container-fluid about">
+
+    <div class="row">
+  <div class="col-6"></div>
+
+  <div class="col-6">
+    <hgroup>
+      Welcome to SeliModel
+    </hgroup>
+
+    <p class="info">Psychometric Probe</p>
+    <hr>
+    <p class="expl">
+      Discover fascinating insights about yourself with our interactive personality quiz. Answer a series of questions, and we’ll reveal unique aspects of your character and provide valuable self-reflection. Gain a deeper understanding of your strengths, preferences, and potential areas for growth. Let’s embark on this journey of self-discovery together!
+    </p>
+
+    <a href="register.php">
+      <button type="button" class="btn btn-success">Lets Get Started</button>
+    </a>
+  </div>
+</div>
+    
+  </div>
+  <!-- about -->
+
+  <!-- users -->
+  <div class="container-fluid users">
+  <header>Used daily by more than 3,000 users</header>
+    <div class="row">
+      
+  <div class="col-6 col-md-4">
+    <div class="card" style="width: 18rem;">
+  <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+  <div class="card-body">
+    <h5 class="card-title">Privacy</h5>
+    <p class="card-text">we care so much about your privacy. Your data is secure and stored in on our own server. We don’t sell your data to 3rd party.</p>
+   
+  </div>
+</div>
+  </div>
+
+  <div class="col-6 col-md-4">
+    <div class="card" style="width: 18rem;">
+  <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+  <div class="card-body">
+    <h5 class="card-title">Accuracy</h5>
+    <p class="card-text">See exactly how you score for Sincerity , Social-Esteem, Conscientiousness, Extraversion, Agreeableness with this scientific personality trait.</p>
+   
+  </div>
+</div>
+  </div>
+
+  <div class="col-6 col-md-4">
+    <div class="card" style="width: 18rem;">
+  <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+  <div class="card-body">
+    <h5 class="card-title">Psychometric Probe</h5>
+    <p class="card-text">The true Psychometric probe is an excellent way of understanding yourself and understanding others and more.</p>
+  
+  </div>
+</div>
+  </div>
+    </div>
+    
+  </div>
+  <!-- users -->
+
   <!-- footer -->
    <footer class="footer text-center">
       <div class="container">
@@ -103,13 +176,11 @@
       </div>
     </footer>
   <!-- footer -->
-      
-      
 
-     
+</div>
 
-     
-    </div>
+
+    
 
 
     <!-- Bootstrap core JavaScript
