@@ -1,11 +1,11 @@
 html {
-  position: relative;
-  min-height: 100%;
+  /*position: relative;
+  min-height: 100%;*/
 }
 body {
    font-family: 'Lato', sans-serif;
-  margin-bottom: 60px;
-  overflow-x: hidden;
+/*  margin-bottom: 60px;*/
+/*  overflow-x: hidden;*/
 
    /* Margin bottom by footer height */
 }
@@ -75,9 +75,15 @@ video {
 
 /*about*/
 .about{
-  height: 400px;
+  height: 450px;
   background-color:#ffffff;
 }
+
+.col-6 .circle{
+  padding-left: 9%;
+}
+
+
 
 hgroup{
   padding-top:5% ;
@@ -115,12 +121,20 @@ hgroup{
 }
 
 .card-title{
-  font-size: 16px;
+  font-size: 20px;
+  text-align: center;
 }
 
 .card{
   margin-top: 5%;
   border-radius: 5%;
+}
+
+.fa {
+  text-align: center;
+  padding-top: 4%;
+  font-size: 30px;
+  color:#005C46 ;
 }
 .
 
@@ -143,8 +157,29 @@ hgroup{
 /*media queries*/
 @media (max-width: 575.98px) { 
   .wrapper {
-    height: 900px;
+    height: 2200px;
     position: relative;
+  }
+
+  .about {
+    height: 650px;
+  }
+
+  .card {
+/*    width: 10rem;*/
+margin-left: 7%;
+
+  }
+
+  .col-6 .circle {
+    width: 100%;
+    height: 300px;
+  }
+
+  .users {
+    height: 800px;
+    max-width: 100%;
+
   }
 
   .uservideo{

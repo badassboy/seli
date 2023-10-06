@@ -3,12 +3,12 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
 
-    <title>Cover Template for Bootstrap</title>
+    <title>SeliModel</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/cover/">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
@@ -105,7 +105,10 @@
   <div class="container-fluid about">
 
     <div class="row">
-  <div class="col-6"></div>
+  <div class="col-6">
+    <img src="images/seliModel/circle.jpeg" alt="..." class="circle" width="371" height="371"
+    style="padding-top: 6%;">
+  </div>
 
   <div class="col-6">
     <hgroup>
@@ -132,9 +135,10 @@
   <header>Used daily by more than 3,000 users</header>
     <div class="row">
       
-  <div class="col-6 col-md-4">
+  <div class="col-sm">
     <div class="card" style="width: 18rem;">
   <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+  <i aria-hidden="true" class="fa fa-lock"></i>
   <div class="card-body">
     <h5 class="card-title">Privacy</h5>
     <p class="card-text">we care so much about your privacy. Your data is secure and stored in on our own server. We don’t sell your data to 3rd party.</p>
@@ -143,9 +147,10 @@
 </div>
   </div>
 
-  <div class="col-6 col-md-4">
+  <div class="col-sm">
     <div class="card" style="width: 18rem;">
   <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
   <div class="card-body">
     <h5 class="card-title">Accuracy</h5>
     <p class="card-text">See exactly how you score for Sincerity , Social-Esteem, Conscientiousness, Extraversion, Agreeableness with this scientific personality trait.</p>
@@ -154,9 +159,10 @@
 </div>
   </div>
 
-  <div class="col-6 col-md-4">
+  <div class="col-sm">
     <div class="card" style="width: 18rem;">
   <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+  <i class="fa fa-star" aria-hidden="true"></i>
   <div class="card-body">
     <h5 class="card-title">Psychometric Probe</h5>
     <p class="card-text">The true Psychometric probe is an excellent way of understanding yourself and understanding others and more.</p>

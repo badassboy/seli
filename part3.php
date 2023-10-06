@@ -55,7 +55,7 @@ $options = [];
 		 <!-- user based question -->
 	<div class="container questions">
 					
-			<h5>PART 2 QUESTIONS</h5>	
+			<h5>PART 3 QUESTIONS</h5>	
 	<div class="form-group">
 
 			<?php 

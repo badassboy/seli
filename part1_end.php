@@ -28,8 +28,28 @@ if (isset($_POST['part2'])) {
 	<title></title>
 	 <!-- Bootstrap core CSS -->
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="css/homepage.css">
+	<!-- <link rel="stylesheet" type="text/css" href="css/homepage.css"> -->
 	<link rel="stylesheet" type="text/css" href="cover.css">
+
+	<style type="text/css">
+
+		
+
+		.wrapper{
+/*			height: 250px;*/
+		}
+		.ending{
+			text-align: center;
+			padding-top: 10%;
+			
+		}
+
+		.btn {
+
+			width: 20%;
+
+		}
+	</style>
 
 
 </head>
@@ -47,7 +67,7 @@ if (isset($_POST['part2'])) {
 		<!-- end of video player -->
 		 
 		 <!-- user based question -->
-	<div class="container questions">
+	<div class="container ending">
 					
 			<form method="post">
 
@@ -55,7 +75,7 @@ if (isset($_POST['part2'])) {
 
 		<h3>End of Part 1</h3>
 		<p>Click below button to enter Part 2</p>
-		<button type="submit" name="part2">Go</button>
+		<button type="submit" name="part2" class="btn btn-success">Go</button>
 		
 </div>
 				
