@@ -1,3 +1,8 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+
 html {
   /*position: relative;
   min-height: 100%;*/
@@ -26,13 +31,14 @@ body {
 .wrapper {
 /*  background-color:#f2f2f2;*/
 /*background-color: yellow;*/
-background-image: url("images/seliModel/watermark.jpg");
+/*background-image: url("images/seliModel/watermark.jpg");
 background-position: center center;
 background-repeat: no-repeat;
 background-size: cover;
 /*backdrop-filter: blur(10px);*/
 
   height: 800px;
+  position: relative;*/
 }
 
 /*pagination*/
@@ -73,14 +79,20 @@ video {
   background-color: yellow;
 }
 
+
+
 /*about*/
 .about{
   height: 450px;
   background-color:#ffffff;
+/*  position: absolute;*/
 }
 
-.col-6 .circle{
+.col-sm .circle{
   padding-left: 9%;
+  width: 371px;
+  height: 371px;
+  padding-top: 6%;
 }
 
 
@@ -111,6 +123,7 @@ hgroup{
 .users{
   background-color: #f2f2f2;
   height: 400px;
+/*  position: absolute;*/
 }
 /*users*/
 .users header{
@@ -155,11 +168,85 @@ hgroup{
 
 
 /*media queries*/
-@media (max-width: 575.98px) { 
+/*smaller phones screen*/
+@media(max-width: 320px){
+
+ /* body{
+    margin: 0px;
+    padding: 0px;
+
+  }*/
+
   .wrapper {
+/*    width: 100%;*/
+/*    position: relative;*/
+
+  }
+
+.carousel{
+
+  /* position: absolute;
+    left:0px;
+    right:0px;*/
+
+}
+
+ 
+   .users {
+    height:800px;
+
+   
+
+  }
+
+  .about {
+    height: 600px;
+  }
+
+  .card {
+    max-width: 250px;
+  }
+  .col-sm .circle {
+
+    padding-left: 3%;
+  width: 200px;
+  height: 200px;
+  padding-top: 6%;
+    
+  }
+
+  .btn-success {
+    margin-left: 10%;
+  }
+    
+
+  .expl {
+    font-weight: normal;
+    font-size: 15px;
+  }
+
+  .myContent {
+    order: 1;
+  }
+
+  .myImage{
+    order: 2;
+  }
+
+  .card {
+    margin-left: 0px;
+    margin-right: -5px;
+  }
+
+}
+
+
+/*larger phone screens*/
+@media (max-width: 575.98px) { 
+  /*.wrapper {
     height: 2200px;
     position: relative;
-  }
+  }*/
 
   .about {
     height: 650px;
@@ -171,9 +258,29 @@ margin-left: 7%;
 
   }
 
-  .col-6 .circle {
-    width: 100%;
-    height: 300px;
+  .col-sm .circle {
+     padding-left: 3%;
+  width: 200px;
+  height: 200px;
+  padding-top: 6%;
+  }
+
+   .btn-success {
+    margin-left: 10%;
+  }
+    
+
+  .expl {
+    font-weight: normal;
+    font-size: 15px;
+  }
+
+  .myContent {
+    order: 1;
+  }
+
+  .myImage{
+    order: 2;
   }
 
   .users {

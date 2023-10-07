@@ -31,11 +31,12 @@
   </head>
 
   <body>
+     <?php include("nav.php"); ?>
 
-    <div class="container-fluid wrapper">
+    <!-- <div class="container-fluid wrapper"> -->
 
       <!-- navigation -->
-      <?php include("nav.php"); ?>
+      
       <!-- <nav class="navbar navbar-expand-lg navbar-dark">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,12 +106,11 @@
   <div class="container-fluid about">
 
     <div class="row">
-  <div class="col-6">
-    <img src="images/seliModel/circle.jpeg" alt="..." class="circle" width="371" height="371"
-    style="padding-top: 6%;">
+  <div class="col-sm myImage">
+    <img src="images/seliModel/circle.jpeg" alt="..." class="circle">
   </div>
 
-  <div class="col-6">
+  <div class="col-sm myContent">
     <hgroup>
       Welcome to SeliModel
     </hgroup>
@@ -183,7 +183,7 @@
     </footer>
   <!-- footer -->
 
-</div>
+<!-- </div> -->
 
 
     
