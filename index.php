@@ -31,6 +31,7 @@
   </head>
 
   <body>
+   
      <?php include("nav.php"); ?>
 
     <!-- <div class="container-fluid wrapper"> -->
@@ -103,9 +104,9 @@
   <!-- end of slider -->
 
   <!-- about -->
-  <div class="container-fluid about">
+  <div class="container-fluid about animation-element bounce-up">
 
-    <div class="row">
+    <div class="row subject">
   <div class="col-sm myImage">
     <img src="images/seliModel/circle.jpeg" alt="..." class="circle">
   </div>
@@ -131,9 +132,9 @@
   <!-- about -->
 
   <!-- users -->
-  <div class="container-fluid users">
+  <div class="container-fluid users animation-element bounce-up">
   <header>Used daily by more than 3,000 users</header>
-    <div class="row">
+    <div class="row subject">
       
   <div class="col-sm">
     <div class="card" style="width: 18rem;">
@@ -196,5 +197,7 @@
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="../../assets/js/vendor/popper.min.js"></script>
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="script/animate.js"></script>
   </body>
 </html>

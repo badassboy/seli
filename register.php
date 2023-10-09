@@ -70,9 +70,11 @@ background-size: cover;
 
   </head>
 
-  <body class="text-center">
+  <body class="text-center" onload="hideLoader()">
 
-    <div class="container-fluid wrapper">
+    <div id="loader"></div>
+
+    <div class="container-fluid wrapper animate-bottom" id="myDiv">
 
      <?php include("nav.php"); ?>
 <!-- end of nav -->
@@ -461,5 +463,23 @@ background-size: cover;
       </div>
     </footer>
     <!-- footer -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+      <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script>
+      myVar = "";
+function hideLoader(){
+  // $('.page-loader').fadeOut('slow');
+   myVar = setTimeout(showPage, 3000);
+}
+
+function showPage() {
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("myDiv").style.display = "block";
+}
+</script>
+
   </body>
 </html>
